@@ -23,6 +23,7 @@ def getUserSelection():
         quit()
       elif(user_selection == 1):
         createPost(user, input(f'Hey {user}, enter your post content: '))
+        continue
       elif(user_selection > 3 or user_selection <= 0):
         print('Enter 1, 2 or 3')
         continue
@@ -57,10 +58,22 @@ def createPost(username, content):
 # Function to quit app
 def quit():
   try:
-    print('Quitting app')
-    return
+    cursor.close()
   except:
-    print('Error quitting app')
+    print('Error closing cursor')
+    traceback.print_exc()
+
+  try:
+    conn.close()
+    print('Connection Closed!')
+  except:
+    print('Error closing connection')
+    traceback.print_exc()
+  # try:
+  #   print('Quitting app')
+  #   return
+  # except:
+  #   print('Error quitting app')
 
 try:
   conn = mariadb.connect(user=dbcreds.user, password=dbcreds.password, host=dbcreds.host, port=dbcreds.port, database=dbcreds.database)
@@ -72,16 +85,3 @@ except:
 cursor = conn.cursor()
 
 getUserSelection()
-
-try:
-  cursor.close()
-except:
-  print('Error closing cursor')
-  traceback.print_exc()
-
-try:
-  conn.close()
-  print('Connection Closed!')
-except:
-  print('Error closing connection')
-  traceback.print_exc()
