@@ -4,11 +4,12 @@ import traceback
 from post import Post
 # dBeaver Starting PROCESSLIST id = 224
 
-initial_options = [
-  {'number': 1, 'option': "Write a post"},
-  {'number': 2, 'option': "See all posts"},
-  {'number': 3, 'option': "Quit"},
-]
+#! Don't fully understand using lists of dictionaries, need to read docs, cant ever seem to loop it properly!
+# initial_options = [
+#   {'number': 1, 'option': "Write a post"},
+#   {'number': 2, 'option': "See all posts"},
+#   {'number': 3, 'option': "Quit"},
+# ]
 
 # Function to get the users selection 
 #! unsure if it makes sense to have a function to set the username, then call it to a variable here, more code, feels more clean.
