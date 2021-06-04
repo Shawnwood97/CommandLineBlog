@@ -11,7 +11,8 @@ from post import Post
 #   {'number': 3, 'option': "Quit"},
 # ]
 
-# Function to get the users selection 
+# Function to get the users selection
+#? continues in elif blocks to go back into the loop
 #! unsure if it makes sense to have a function to set the username, then call it to a variable here, more code, feels more clean.
 def getUserSelection():
   while True:
@@ -55,10 +56,11 @@ def createPost(username, content):
     print('Unknown error creating post!')
     traceback.print_exc()
 
-# Function to quit app
+# Function to quit app, closes cursor and connection
 def quit():
   try:
     cursor.close()
+    print('Cursor Closed')
   except:
     print('Error closing cursor')
     traceback.print_exc()
