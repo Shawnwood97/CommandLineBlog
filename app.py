@@ -4,13 +4,6 @@ import traceback
 from post import Post
 # dBeaver Starting PROCESSLIST id = 224
 
-#! Don't fully understand using lists of dictionaries, need to read docs, cant ever seem to loop it properly!
-# initial_options = [
-#   {'number': 1, 'option': "Write a post"},
-#   {'number': 2, 'option': "See all posts"},
-#   {'number': 3, 'option': "Quit"},
-# ]
-
 # Function to get the users selection
 #? continues in elif blocks to go back into the loop
 #! unsure if it makes sense to have a function to set the username, then call it to a variable here, more code, feels more clean.
@@ -40,14 +33,15 @@ def getUserSelection(user):
   return user_selection
 
 # Function to get username 
-def getUserName():
-  while True:
-    try:
-      user = input('Welcome, please enter a username: ')
-      return user
-    except:
-      print('Error with username!')
-      traceback.print_exc()
+#? this was for the original assignment, not used after bonus!
+# def getUserName():
+#   while True:
+#     try:
+#       user = input('Welcome, please enter a username: ')
+#       return user
+#     except:
+#       print('Error with username!')
+#       traceback.print_exc()
 
 # login function, Loops, fair amount of error elifs, should catch most cases?
 #? you will get multiple error prints from the error catching elif's! one for every user in the database, not ideal, but works!
@@ -81,8 +75,10 @@ def login():
         break
       elif(selection > 2 or selection <= 0):
         print('Please enter a valid option!')
+    except ValueError:
+      print('You must enter a number')
     except:
-      print('Error logging in!')
+      print('Error with seleciton!')
       traceback.print_exc()
 
 # create post function, seems to worl well, #? uses Post Class 
