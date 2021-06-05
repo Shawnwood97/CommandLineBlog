@@ -15,9 +15,9 @@ from post import Post
 #? continues in elif blocks to go back into the loop
 #! unsure if it makes sense to have a function to set the username, then call it to a variable here, more code, feels more clean.
 def getUserSelection():
+  user = getUserName()
   while True:
     try:
-      user = getUserName()
       print('Options: \n 1: Write a post \n 2: See all posts \n 3: Quit')
       user_selection = int(input(f'{user}, Make a selection: '))
       if(user_selection == 3):
@@ -40,12 +40,13 @@ def getUserSelection():
 
 # Function to get username 
 def getUserName():
-  try:
-    user = input('Welcome, please enter a username: ')
-    return user
-  except:
-    print('Error with username!')
-    traceback.print_exc()
+  while True:
+    try:
+      user = input('Welcome, please enter a username: ')
+      return user
+    except:
+      print('Error with username!')
+      traceback.print_exc()
 
 # create post function, seems to worl well, #? uses Post Class 
 #! Should createPost be in Post class? Will think about this, since it is a "function" of a post...  kinda
