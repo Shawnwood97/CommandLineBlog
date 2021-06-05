@@ -25,6 +25,9 @@ def getUserSelection():
       elif(user_selection == 1):
         createPost(user, input(f'Hey {user}, enter your post content: '))
         continue
+      elif(user_selection == 2):
+        getAllPosts()
+        continue
       elif(user_selection > 3 or user_selection <= 0):
         print('Enter 1, 2 or 3')
         continue
@@ -54,6 +57,19 @@ def createPost(username, content):
     print('Post Created')
   except:
     print('Unknown error creating post!')
+    traceback.print_exc()
+
+def getAllPosts():
+  try:
+    cursor.execute("SELECT * FROM blog_post")
+    posts = cursor.fetchall()
+    for post in posts:
+      print(f'\n User: {post[0]} ---------- Post ID: {post[2]}')
+      print(post[1])
+      print('---------------------------------------')
+    # print(posts)
+  except:
+    print('Unknown error getting posts')
     traceback.print_exc()
 
 # Function to quit app, closes cursor and connection
