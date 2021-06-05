@@ -14,14 +14,15 @@ from post import Post
 # Function to get the users selection
 #? continues in elif blocks to go back into the loop
 #! unsure if it makes sense to have a function to set the username, then call it to a variable here, more code, feels more clean.
-def getUserSelection():
-  user = getUserName()
+#? changed quit functiuonality to send you back to login rathe than running the quit function, so that the connection remains open and can re login.
+def getUserSelection(user):
+  # user = getUserName()
   while True:
     try:
       print('Options: \n 1: Write a post \n 2: See all posts \n 3: Quit')
       user_selection = int(input(f'{user}, Make a selection: '))
       if(user_selection == 3):
-        quit()
+        break
       elif(user_selection == 1):
         createPost(user, input(f'Hey {user}, enter your post content: '))
         continue
@@ -46,6 +47,42 @@ def getUserName():
       return user
     except:
       print('Error with username!')
+      traceback.print_exc()
+
+# login function, Loops, fair amount of error elifs, should catch most cases?
+#? you will get multiple error prints from the error catching elif's! one for every user in the database, not ideal, but works!
+def login():
+  while True:
+    try:
+      print('Please login to see options!')
+      print('Options: \n 1: Login \n 2: Quit')
+      selection = int(input('Make a selection: '))
+
+      if(selection == 1):
+        username = input('Please enter your username: ')
+        password = input('Please enter your password: ')
+        cursor.execute('SELECT * FROM user')
+        all_users = cursor.fetchall()
+        for user in all_users:
+          if(username == user[0] and password == user[1]):
+            print(f'Welcome {user[0]}, You have logged in!')
+            getUserSelection(username)
+          elif(username == user[0] and password != user[1]):
+            print(f'Sorry {username}, You have entered the wrong password!')
+            continue
+          elif(username != user[0]):
+            print('Invalid username!')
+            continue
+          elif(username != user[0] or password != user[1]):
+            print('invalid user information')
+            continue
+      elif(selection == 2):
+        quit()
+        break
+      elif(selection > 2 or selection <= 0):
+        print('Please enter a valid option!')
+    except:
+      print('Error logging in!')
       traceback.print_exc()
 
 # create post function, seems to worl well, #? uses Post Class 
@@ -88,11 +125,6 @@ def quit():
   except:
     print('Error closing connection')
     traceback.print_exc()
-  # try:
-  #   print('Quitting app')
-  #   return
-  # except:
-  #   print('Error quitting app')
 
 try:
   conn = mariadb.connect(user=dbcreds.user, password=dbcreds.password, host=dbcreds.host, port=dbcreds.port, database=dbcreds.database)
@@ -103,4 +135,4 @@ except:
 
 cursor = conn.cursor()
 
-getUserSelection()
+login()
